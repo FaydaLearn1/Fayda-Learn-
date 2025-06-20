@@ -1,2 +1,2 @@
-# Fayda-Learn-
+# Fayda-Learn
 Online Learning Courses 
