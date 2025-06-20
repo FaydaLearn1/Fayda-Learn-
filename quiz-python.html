@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f3f7ff;
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      background: #212121;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+    }
+    .quiz-container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question h4 {
+      margin-bottom: 10px;
+      color: #0088cc;
+    }
+    label {
+      display: block;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+    button {
+      background: #0088cc;
+      color: #fff;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background: #0072a8;
+    }
+    #result {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    @media (max-width: 600px) {
+      .quiz-container {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>Python Programming Final Quiz</header>
+
+  <div class="quiz-container">
+    <form id="quizForm">
+      <!-- Question Template -->
+      <div class="question" id="q1">
+        <h4>1. What does the `print()` function do?</h4>
+        <label><input type="radio" name="q1" value="a"> Defines a variable</label>
+        <label><input type="radio" name="q1" value="b"> Loops a statement</label>
+        <label><input type="radio" name="q1" value="c"> Prints output to screen ✅</label>
+        <label><input type="radio" name="q1" value="d"> Ends a function</label>
+      </div>
+
+      <div class="question" id="q2">
+        <h4>2. Which symbol is used for comments in Python?</h4>
+        <label><input type="radio" name="q2" value="a"> // </label>
+        <label><input type="radio" name="q2" value="b"> <!-- --> </label>
+        <label><input type="radio" name="q2" value="c"> # ✅</label>
+        <label><input type="radio" name="q2" value="d"> *</label>
+      </div>
+
+      <div class="question" id="q3">
+        <h4>3. What is the output of: <code>print(3 + 2 * 2)</code>?</h4>
+        <label><input type="radio" name="q3" value="a"> 10</label>
+        <label><input type="radio" name="q3" value="b"> 7 ✅</label>
+        <label><input type="radio" name="q3" value="c"> 9</label>
+        <label><input type="radio" name="q3" value="d"> 12</label>
+      </div>
+
+      <!-- Add More Questions -->
+      <!-- You can repeat structure like above -->
+      <!-- Sample generator pattern below to fill in up to 20 -->
+
+      <script>
+        const questions = [
+          ["4. Which data type is used to store True or False?", "bool"],
+          ["5. Which function returns the length of a list?", "len"],
+          ["6. Which loop is used when you know how many times to run?", "for"],
+          ["7. What keyword defines a function?", "def"],
+          ["8. How do you start an if condition in Python?", "if"],
+          ["9. What does `input()` do?", "Takes user input"],
+          ["10. How do you write a while loop?", "while"],
+          ["11. What is a correct variable name?", "my_var"],
+          ["12. What is the index of first element in a list?", "0"],
+          ["13. What is `str()` used for?", "convert to string"],
+          ["14. How do you add a comment?", "#"],
+          ["15. How do you create a list?", "[1, 2, 3]"],
+          ["16. What does `break` do in a loop?", "exits loop"],
+          ["17. Which data type holds text?", "str"],
+          ["18. What does `return` do in a function?", "returns value"],
+          ["19. What is the output of `len('hello')`?", "5"],
+          ["20. What is used to handle errors?", "try/except"],
+        ];
+
+        let container = document.querySelector('form');
+        questions.forEach((q, i) => {
+          let index = i + 4;
+          container.innerHTML += `
+          <div class="question" id="q${index}">
+            <h4>${q[0]}</h4>
+            <label><input type="radio" name="q${index}" value="a"> Option A</label>
+            <label><input type="radio" name="q${index}" value="b"> Option B</label>
+            <label><input type="radio" name="q${index}" value="c"> ${q[1]} ✅</label>
+            <label><input type="radio" name="q${index}" value="d"> Option D</label>
+          </div>`;
+        });
+      </script>
+
+      <button type="submit">Submit Quiz</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    document.getElementById('quizForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let score = 0;
+      let total = 20;
+
+      const answers = {
+        q1: 'c', q2: 'c', q3: 'b',
+        q4: 'c', q5: 'c', q6: 'c', q7: 'c', q8: 'c',
+        q9: 'c', q10: 'c', q11: 'c', q12: 'c',
+        q13: 'c', q14: 'c', q15: 'c', q16: 'c',
+        q17: 'c', q18: 'c', q19: 'c', q20: 'c'
+      };
+localStorage.setItem("fullName", "Student Full Name");
+localStorage.setItem("profileImage", "data:image/png;base64,..."); // Optional
+      for (let i = 1; i <= total; i++) {
+        const q = document.querySelector(`input[name="q${i}"]:checked`);
+        if (q && q.value === answers[`q${i}`]) {
+          score++;
+        }
+      }
+
+      const resultDiv = document.getElementById("result");
+
+      if (score >= 12) {
+        resultDiv.innerHTML = `<p>✅ Congratulations! You passed with ${score}/20.</p>`;
+        localStorage.setItem("python_score", score);
+        setTimeout(() => {
+          window.location.href = "certificate.html";
+        }, 2000);
+      } else {
+        resultDiv.innerHTML = `<p>❌ You scored ${score}/20. You need at least 12 to pass. Try again.</p>`;
+        window.scrollTo(0, document.body.scrollHeight);
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Programming Course</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      padding: 60px 20px 20px;
+    }
+    header {
+      background: #212121;
+      color: #fff;
+      padding: 15px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hamburger {
+      font-size: 24px;
+      cursor: pointer;
+      display: none;
+    }
+    nav {
+      background: #333;
+      color: #fff;
+      padding: 10px;
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+    }
+    nav a {
+      display: block;
+      color: #fff;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-bottom: 1px solid #444;
+    }
+    nav a:hover {
+      background: #444;
+    }
+    .chapter {
+      background: #fff;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #0088cc;
+    }
+    iframe {
+      width: 100%;
+      height: 315px;
+      margin: 10px 0;
+      border: none;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+    button {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 30px;
+      font-size: 16px;
+      background: #0088cc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0072a8;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div><strong>Python Programming Course</strong></div>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+  </header>
+
+  <nav id="menu">
+    <a href="#ch1">Chapter 1: Intro</a>
+    <a href="#ch2">Chapter 2: Variables</a>
+    <a href="#ch3">Chapter 3: Conditions</a>
+    <a href="#ch4">Chapter 4: Loops</a>
+    <a href="#ch5">Chapter 5: Functions</a>
+  </nav>
+
+  <main>
+    <div class="chapter" id="ch1">
+      <h2>Chapter 1: Introduction to Python</h2>
+      <p>Python is a high-level, interpreted language known for its simplicity and readability.</p>
+      <iframe src="https://www.youtube.com/embed/_uQrJ0TkZlc" allowfullscreen></iframe>
+      <h4>Example:</h4>
+      <pre>
+print("Hello, Python!")
+      </pre>
+      <h4>Exercise:</h4>
+      <p>Print your name using Python.</p>
+    </div>
+
+    <div class="chapter" id="ch2">
+      <h2>Chapter 2: Variables and Data Types</h2>
+      <p>Variables store values. Python supports types like int, float, str, and bool.</p>
+      <iframe src="https://www.youtube.com/embed/apACNr7DC_s" allowfullscreen></iframe>
+      <h4>Example:</h4>
+      <pre>
+name = "Fayda"
+age = 18
+print(name, age)
+      </pre>
+      <h4>Exercise:</h4>
+      <p>Declare two variables: your age and your city, then print them.</p>
+    </div>
+
+    <div class="chapter" id="ch3">
+      <h2>Chapter 3: Conditional Statements</h2>
+      <p>Use if, elif, and else to control the flow of your program.</p>
+      <iframe src="https://www.youtube.com/embed/f4KOjWS_KZs" allowfullscreen></iframe>
+      <h4>Example:</h4>
+      <pre>
+score = 70
+if score >= 60:
+    print("Pass")
+else:
+    print("Fail")
+      </pre>
+      <h4>Exercise:</h4>
+      <p>Write a program to check if a number is even or odd.</p>
+    </div>
+
+    <div class="chapter" id="ch4">
+      <h2>Chapter 4: Loops</h2>
+      <p>Loops repeat actions. Python supports for and while loops.</p>
+      <iframe src="https://www.youtube.com/embed/6iF8Xb7Z3wQ" allowfullscreen></iframe>
+      <h4>Example:</h4>
+      <pre>
+for i in range(1, 6):
+    print(i)
+      </pre>
+      <h4>Exercise:</h4>
+      <p>Print all even numbers from 1 to 20 using a loop.</p>
+    </div>
+
+    <div class="chapter" id="ch5">
+      <h2>Chapter 5: Functions</h2>
+      <p>Functions allow code reuse. Define with <code>def</code>.</p>
+      <iframe src="https://www.youtube.com/embed/NSbOtYzIQI0" allowfullscreen></iframe>
+      <h4>Example:</h4>
+      <pre>
+def greet(name):
+    print("Hello", name)
+
+greet("Fayda")
+      </pre>
+      <h4>Exercise:</h4>
+      <p>Create a function that returns the square of a number.</p>
+    </div>
+
+    <button onclick="goToQuiz()">Take Final Quiz</button>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function goToQuiz() {
+      localStorage.setItem("python_course_completed", "true");
+      window.location.href = "quiz-python.html";
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Certificate Verification</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+  }
+  header {
+    background: #4A90E2;
+    width: 100%;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  main {
+    flex-grow: 1;
+    max-width: 600px;
+    width: 90%;
+    margin: 2rem auto;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  #reader {
+    margin: 1rem auto;
+    width: 100%;
+    max-width: 400px;
+    border: 2px solid #4A90E2;
+    border-radius: 10px;
+  }
+  #result {
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+  }
+  .valid {
+    color: green;
+  }
+  .invalid {
+    color: red;
+  }
+  .cert-info {
+    text-align: left;
+    margin-top: 1rem;
+    background: #e7f3fe;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #4A90E2;
+  }
+  button {
+    margin-top: 1rem;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: #4A90E2;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #357ABD;
+  }
+</style>
+<!-- Include html5-qrcode library -->
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+</head>
+<body>
+
+<header>Certificate Verification</header>
+
+<main>
+  <p>Scan the QR code on your certificate below:</p>
+  <div id="reader"></div>
+  
+  <div id="result"></div>
+
+  <button id="start-btn">Start Scanner</button>
+  <button id="stop-btn" style="display:none;">Stop Scanner</button>
+</main>
+
+<script>
+  const resultDiv = document.getElementById("result");
+  const startBtn = document.getElementById("start-btn");
+  const stopBtn = document.getElementById("stop-btn");
+  let html5QrcodeScanner;
+
+  function displayCertificateInfo(cert) {
+    return `
+      <div class="cert-info">
+        <strong>Certificate ID:</strong> ${cert.id} <br>
+        <strong>Name:</strong> ${cert.name} <br>
+        <strong>Course:</strong> ${cert.course} <br>
+        <strong>Issued On:</strong> ${cert.issued} <br>
+        <strong>Expires On:</strong> ${cert.expires} <br>
+      </div>
+    `;
+  }
+
+  function verifyCertificate(certID) {
+    const certs = JSON.parse(localStorage.getItem("certificates") || "[]");
+    const found = certs.find(c => c.id === certID);
+    if(found) {
+      const today = new Date().toISOString().split("T")[0];
+      if (today > found.expires) {
+        resultDiv.innerHTML = `<p class="invalid">Certificate <strong>${certID}</strong> is expired.</p>` + displayCertificateInfo(found);
+      } else {
+        resultDiv.innerHTML = `<p class="valid">Certificate <strong>${certID}</strong> is <strong>Valid</strong> ✅</p>` + displayCertificateInfo(found);
+      }
+    } else {
+      resultDiv.innerHTML = `<p class="invalid">Certificate <strong>${certID}</strong> is <strong>Invalid</strong> ❌</p>`;
+    }
+  }
+
+  function onScanSuccess(decodedText, decodedResult) {
+    // Stop scanning once a code is decoded
+    html5QrcodeScanner.stop().then(() => {
+      verifyCertificate(decodedText);
+      startBtn.style.display = "inline-block";
+      stopBtn.style.display = "none";
+    }).catch(err => {
+      console.error("Failed to stop scanning", err);
+    });
+  }
+
+  function onScanFailure(error) {
+    // No action on failure to scan - keep scanning
+  }
+
+  startBtn.addEventListener("click", () => {
+    resultDiv.innerHTML = "";
+    startBtn.style.display = "none";
+    stopBtn.style.display = "inline-block";
+    html5QrcodeScanner = new Html5Qrcode("reader");
+    Html5Qrcode.getCameras().then(cameras => {
+      if (cameras && cameras.length) {
+        const cameraId = cameras[0].id;
+        html5QrcodeScanner.start(
+          cameraId,
+          { fps: 10, qrbox: 250 },
+          onScanSuccess,
+          onScanFailure
+        ).catch(err => {
+          resultDiv.innerHTML = `<p class="invalid">Error starting camera: ${err}</p>`;
+          startBtn.style.display = "inline-block";
+          stopBtn.style.display = "none";
+        });
+      } else {
+        resultDiv.innerHTML = `<p class="invalid">No cameras found on this device.</p>`;
+        startBtn.style.display = "inline-block";
+        stopBtn.style.display = "none";
+      }
+    }).catch(err => {
+      resultDiv.innerHTML = `<p class="invalid">Camera permission denied or error: ${err}</p>`;
+      startBtn.style.display = "inline-block";
+      stopBtn.style.display = "none";
+    });
+  });
+
+  stopBtn.addEventListener("click", () => {
+    html5QrcodeScanner.stop().then(() => {
+      resultDiv.innerHTML = "<p>Scanner stopped.</p>";
+      startBtn.style.display = "inline-block";
+      stopBtn.style.display = "none";
+    }).catch(err => {
+      resultDiv.innerHTML = `<p class="invalid">Error stopping scanner: ${err}</p>`;
+    });
+  });
+</script>
+
+</body>
+</html>

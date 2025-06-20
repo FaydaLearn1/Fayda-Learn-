@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Dev Final Quiz - Fayda Learn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    .quiz-container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question h3 {
+      margin-bottom: 10px;
+    }
+    .options label {
+      display: block;
+      padding: 8px;
+      margin-bottom: 5px;
+      background: #eaeaea;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .options input {
+      margin-right: 10px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+    .result {
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      color: #333;
+    }
+    @media (max-width: 600px) {
+      .quiz-container {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Web Development Final Quiz</h1>
+
+  <div class="quiz-container" id="quizForm">
+    <!-- JS will inject questions here -->
+  </div>
+
+  <button onclick="submitQuiz()">Submit Quiz</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    const questions = [
+      {
+        q: "1. What does HTML stand for?",
+        a: ["Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlinks and Text Markup Language", "Hyperlink Tool Manual Language"],
+        correct: 0
+      },
+      {
+        q: "2. Which HTML element is used to insert a line break?",
+        a: ["<br>", "<lb>", "<break>", "<hr>"],
+        correct: 0
+      },
+      {
+        q: "3. What does CSS stand for?",
+        a: ["Cascading Style Sheets", "Color Style Sheets", "Creative Style Syntax", "Computer Style System"],
+        correct: 0
+      },
+      {
+        q: "4. Which tag is used to link an external CSS file?",
+        a: ["<link>", "<style>", "<css>", "<script>"],
+        correct: 0
+      },
+      {
+        q: "5. What is the correct syntax for a CSS comment?",
+        a: ["/* comment */", "// comment", "# comment", "<!-- comment -->"],
+        correct: 0
+      },
+      {
+        q: "6. What is the correct way to declare a JavaScript variable?",
+        a: ["var x;", "let x;", "const x;", "All of the above"],
+        correct: 3
+      },
+      {
+        q: "7. Which method is used to output text in the browser console?",
+        a: ["console.log()", "alert()", "write()", "print()"],
+        correct: 0
+      },
+      {
+        q: "8. How do you write a function in JavaScript?",
+        a: ["function myFunc() {}", "func myFunc() {}", "function:myFunc() {}", "function = myFunc[]"],
+        correct: 0
+      },
+      {
+        q: "9. Which attribute is used in HTML to define inline styles?",
+        a: ["style", "css", "font", "styles"],
+        correct: 0
+      },
+      {
+        q: "10. What does DOM stand for?",
+        a: ["Document Object Model", "Data Object Method", "Document Order Model", "Digital Object Method"],
+        correct: 0
+      },
+      {
+        q: "11. Which of the following is a JavaScript event?",
+        a: ["onClick", "hover", "loadHTML", "runScript"],
+        correct: 0
+      },
+      {
+        q: "12. Which is used to add comments in HTML?",
+        a: ["<!-- comment -->", "// comment", "/* comment */", "# comment"],
+        correct: 0
+      },
+      {
+        q: "13. Which of the following selects an element by ID in JavaScript?",
+        a: ["document.getElementById()", "get.id()", "querySelector('#id')", "Both A and C"],
+        correct: 3
+      },
+      {
+        q: "14. Which input type is used for email?",
+        a: ["<input type='email'>", "<input type='mail'>", "<input type='text-email'>", "<input type='text'>"],
+        correct: 0
+      },
+      {
+        q: "15. Which tag is used to define a table row?",
+        a: ["<tr>", "<td>", "<table>", "<row>"],
+        correct: 0
+      },
+      {
+        q: "16. Which protocol is used to load websites securely?",
+        a: ["HTTPS", "FTP", "HTTP", "TCP"],
+        correct: 0
+      },
+      {
+        q: "17. Which file extension is used for JavaScript files?",
+        a: [".js", ".java", ".script", ".txt"],
+        correct: 0
+      },
+      {
+        q: "18. Which CSS property is used for text color?",
+        a: ["color", "text-color", "font-color", "textStyle"],
+        correct: 0
+      },
+      {
+        q: "19. Which HTML tag is used for inserting images?",
+        a: ["<img>", "<image>", "<pic>", "<photo>"],
+        correct: 0
+      },
+      {
+        q: "20. Which of the following is a block-level element?",
+        a: ["<div>", "<span>", "<a>", "<img>"],
+        correct: 0
+      }
+    ];
+
+    function loadQuiz() {
+      const container = document.getElementById("quizForm");
+      questions.forEach((q, i) => {
+        let html = `
+          <div class="question">
+            <h3>${q.q}</h3>
+            <div class="options">
+        `;
+        q.a.forEach((option, index) => {
+          html += `
+            <label>
+              <input type="radio" name="q${i}" value="${index}"> ${option}
+            </label>
+          `;
+        });
+        html += `</div></div>`;
+        container.innerHTML += html;
+      });
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      questions.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected && parseInt(selected.value) === q.correct) {
+          score++;
+        }
+      });
+      localStorage.setItem("fullName", "Student Full Name");
+localStorage.setItem("profileImage", "data:image/png;base64,..."); // Optional
+
+      const percent = (score / questions.length) * 100;
+      const result = document.getElementById("result");
+
+      if (percent >= 60) {
+        result.innerHTML = `🎉 You passed with ${score}/20! Redirecting to Certificate...`;
+        setTimeout(() => {
+          localStorage.setItem("webQuizScore", score);
+          window.location.href = "certificate.html";
+        }, 2000);
+      } else {
+        result.innerHTML = `❌ You scored ${score}/20. You need at least 12 correct to pass.`;
+      }
+    }
+
+    loadQuiz();
+  </script>
+</body>
+</html>

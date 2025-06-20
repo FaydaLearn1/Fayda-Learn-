@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Certificate of Completion - Fayda Learn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .certificate {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      border: 10px solid #003366;
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      border-radius: 12px;
+    }
+    .certificate h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #003366;
+    }
+    .certificate h2 {
+      margin: 10px 0;
+      color: #444;
+    }
+    .certificate p {
+      font-size: 18px;
+      margin: 10px;
+      color: #333;
+    }
+    .user-pic {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #003366;
+      margin: 20px auto;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+    }
+    .footer img {
+      width: 100px;
+    }
+    .qrcode {
+      margin: auto;
+    }
+    .logo {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      width: 80px;
+    }
+    .cert-id {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    @media (max-width: 600px) {
+      .footer {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="certificate" id="certificate">
+  <img src="logo.png" alt="Fayda Learn Logo" class="logo">
+  <h1>Certificate of Completion</h1>
+  <h2 id="name">[Student Name]</h2>
+  <img id="userPic" class="user-pic" src="" alt="User Photo">
+  <p>has successfully completed the course:</p>
+  <h2 id="course">[Course Name]</h2>
+  <p>Date of Issue: <span id="issuedDate"></span></p>
+  <p>Expiry Date: <span id="expiryDate"></span></p>
+  <div class="cert-id">Certificate ID: <span id="certId"></span></div>
+  <div class="qrcode" id="qrCodeCanvas"></div>
+
+  <div class="footer">
+    <div>
+      <p>____________________</p>
+      <strong>CEO, Fayda Learn</strong>
+    </div>
+    <img src="stamp.png" alt="Stamp/Watermark">
+  </div>
+</div>
+
+<script>
+  // Simulated user data (from registration or quiz)
+  const user = JSON.parse(localStorage.getItem("registeredUser") || "{}");
+  const course = user.course || "Web Development";
+  const fullName = `${user.firstName || "John"} ${user.middleName || ""} ${user.lastName || "Doe"}`.trim();
+  const photo = user.profilePic || "https://via.placeholder.com/120";
+  const issued = new Date().toLocaleDateString();
+  const expiry = new Date();
+  expiry.setFullYear(expiry.getFullYear() + 1);
+
+  const certId = 'FAYDA-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+
+  document.getElementById("name").textContent = fullName;
+  document.getElementById("course").textContent = course;
+  document.getElementById("userPic").src = photo;
+  document.getElementById("issuedDate").textContent = issued;
+  document.getElementById("expiryDate").textContent = expiry.toLocaleDateString();
+  document.getElementById("certId").textContent = certId;
+
+  // Save certificate data
+  const certData = {
+    certId,
+    name: fullName,
+    course,
+    photo,
+    issuedDate: issued,
+    expiryDate: expiry.toLocaleDateString()
+  };
+
+  const certs = JSON.parse(localStorage.getItem("certificates") || "[]");
+  certs.push(certData);
+  localStorage.setItem("certificates", JSON.stringify(certs));
+
+  // Generate QR Code linking to verify.html
+  const qrURL = `${location.origin}/verify.html?certId=${certId}`;
+  QRCode.toCanvas(document.getElementById('qrCodeCanvas'), qrURL, { width: 128 }, function (error) {
+    if (error) console.error(error);
+  });
+</script>
+
+</body>
+</html>

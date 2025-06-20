@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Fayda Learn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body {
+      background: linear-gradient(to right, #0077b6, #00b4d8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      border: none;
+      border-radius: 6px;
+      margin-bottom: 1.2rem;
+    }
+
+    button {
+      width: 100%;
+      background: #03045e;
+      color: white;
+      padding: 0.7rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #023e8a;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: #caf0f8;
+      text-decoration: none;
+    }
+
+    .error-message {
+      color: yellow;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Login to Fayda Learn</h2>
+    <form id="loginForm">
+      <label for="email">Registered Email</label>
+      <input type="email" id="email" required placeholder="Enter your email">
+      
+      <div class="error-message" id="errorMessage"></div>
+      
+      <button type="submit">Login</button>
+    </form>
+
+    <a href="index.html" class="back-link">Don't have an account? Sign up</a>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const userData = JSON.parse(localStorage.getItem("currentUser"));
+
+      if (!userData || userData.email !== email) {
+        document.getElementById("errorMessage").innerText = "Invalid email or no user registered.";
+        return;
+      }
+
+      // Successful login
+      alert("Login successful!");
+
+      // Redirect based on course
+      const course = userData.course;
+      if (course === "web") {
+        window.location.href = "course-web.html";
+      } else if (course === "android") {
+        window.location.href = "course-android.html";
+      } else if (course === "ai") {
+        window.location.href = "course-ai.html";
+      } else if (course === "python") {
+        window.location.href = "course-python.html";
+      } else {
+        alert("No course found.");
+      }
+    });
+  </script>
+
+</body>
+</html>

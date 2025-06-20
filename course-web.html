@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web Development Course - Fayda Learn</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+    }
+    header {
+      background: linear-gradient(to right, #0f2027, #2c5364);
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+    nav {
+      display: none;
+      background: #2c5364;
+      color: white;
+      padding: 10px;
+    }
+    nav a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 8px 0;
+    }
+    .container {
+      padding: 20px;
+    }
+    .chapter {
+      background: white;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .chapter h2 {
+      margin-top: 0;
+      color: #1e3c72;
+    }
+    .example, .exercise {
+      background: #f1f1f1;
+      padding: 10px;
+      margin-top: 10px;
+      border-left: 4px solid #007bff;
+    }
+    iframe {
+      width: 100%;
+      height: 220px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .quiz-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin: 30px 0;
+    }
+    .quiz-btn a {
+      text-decoration: none;
+      background: #28a745;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    footer {
+      background: #2c5364;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 16px;
+      }
+      iframe {
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>📘 Web Development - Fayda Learn</h1>
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+</header>
+
+<nav id="hamburgerMenu">
+  <a href="dashboard.html">🏠 Dashboard</a>
+  <a href="certificate.html">🎓 Certificate</a>
+  <a href="about.html">📖 About Us</a>
+  <a href="index.html">🔐 Logout</a>
+</nav>
+
+<div class="container">
+
+  <div class="chapter">
+    <h2>Chapter 1: Introduction to Web Development</h2>
+    <p>Understand the internet, websites, hosting, and how the web works.</p>
+    <iframe src="https://www.youtube.com/embed/z0n1aQ3IxWI" allowfullscreen></iframe>
+    <div class="example"><strong>Example:</strong> What happens when you enter a URL in your browser?</div>
+    <div class="exercise"><strong>Exercise:</strong> Describe how a browser loads a webpage (client-server model).</div>
+  </div>
+
+  <div class="chapter">
+    <h2>Chapter 2: HTML Fundamentals</h2>
+    <p>Learn HTML elements, document structure, and page layout.</p>
+    <iframe src="https://www.youtube.com/embed/UB1O30fR-EE" allowfullscreen></iframe>
+    <div class="example"><strong>Example:</strong> &lt;h1&gt;Welcome to Fayda Learn&lt;/h1&gt;</div>
+    <div class="exercise"><strong>Exercise:</strong> Create a webpage with headings, paragraph and image.</div>
+  </div>
+
+  <div class="chapter">
+    <h2>Chapter 3: CSS Styling</h2>
+    <p>Explore how to style pages using color, layout, and responsive design.</p>
+    <iframe src="https://www.youtube.com/embed/yfoY53QXEnI" allowfullscreen></iframe>
+    <div class="example"><strong>Example:</strong> <code>h1 { color: blue; }</code></div>
+    <div class="exercise"><strong>Exercise:</strong> Style a card with colored borders and shadows.</div>
+  </div>
+
+  <div class="chapter">
+    <h2>Chapter 4: JavaScript Basics</h2>
+    <p>Add interactivity with JavaScript variables, functions, and events.</p>
+    <iframe src="https://www.youtube.com/embed/hdI2bqOjy3c" allowfullscreen></iframe>
+    <div class="example"><strong>Example:</strong> <code>alert("Hello!");</code></div>
+    <div class="exercise"><strong>Exercise:</strong> Make a button that shows an alert on click.</div>
+  </div>
+
+  <div class="chapter">
+    <h2>Chapter 5: Final Project - Build a Website</h2>
+    <p>Apply your skills to build a simple, responsive portfolio website.</p>
+    <iframe src="https://www.youtube.com/embed/BsDoLVMnmZs" allowfullscreen></iframe>
+    <div class="example"><strong>Example:</strong> A website with intro, skills, and contact form.</div>
+    <div class="exercise"><strong>Exercise:</strong> Build a one-page personal website and upload it to GitHub.</div>
+  </div>
+
+  <div class="quiz-btn">
+    <a href="web-quiz.html">🎯 Take Final Quiz</a>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2025 Fayda Learn | Digital Ethiopia 🇪🇹
+</footer>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById('hamburgerMenu');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
+
+</body>
+</html>

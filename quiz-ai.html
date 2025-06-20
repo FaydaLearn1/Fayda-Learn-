@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Basics Final Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      text-align: center;
+      color: #00ffcc;
+    }
+    .quiz-container {
+      max-width: 900px;
+      margin: auto;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .question {
+      margin-bottom: 15px;
+      padding: 15px;
+      background: #1e2a38;
+      border-radius: 10px;
+    }
+    .question h3 {
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin: 5px 0;
+    }
+    button {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 30px;
+      background: #00ffcc;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #00e6b8;
+    }
+    .result {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>AI Basics Final Quiz</h1>
+  <div class="quiz-container" id="quizForm">
+    <!-- JavaScript will generate questions here -->
+  </div>
+  <button onclick="submitQuiz()">Submit Quiz</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    const questions = [
+      {
+        question: "1. What does AI stand for?",
+        options: ["Automated Intelligence", "Artificial Intelligence", "Automatic Integration", "Applied Informatics"],
+        answer: "Artificial Intelligence"
+      },
+      {
+        question: "2. Which of the following is a type of AI?",
+        options: ["Narrow AI", "General AI", "Super AI", "All of the above"],
+        answer: "All of the above"
+      },
+      {
+        question: "3. Which is an application of AI?",
+        options: ["Image Recognition", "Speech Recognition", "Autonomous Vehicles", "All of the above"],
+        answer: "All of the above"
+      },
+      {
+        question: "4. Who is considered the father of AI?",
+        options: ["Alan Turing", "John McCarthy", "Geoffrey Hinton", "Andrew Ng"],
+        answer: "John McCarthy"
+      },
+      {
+        question: "5. What is Machine Learning?",
+        options: ["A type of AI", "An operating system", "A web framework", "A coding language"],
+        answer: "A type of AI"
+      },
+      {
+        question: "6. What does NLP stand for in AI?",
+        options: ["Natural Language Processing", "Neural Link Protocol", "Normal Logic Pattern", "Natural Logic Path"],
+        answer: "Natural Language Processing"
+      },
+      {
+        question: "7. Which algorithm is used in supervised learning?",
+        options: ["Linear Regression", "K-Means", "Apriori", "PCA"],
+        answer: "Linear Regression"
+      },
+      {
+        question: "8. Deep learning is based on what?",
+        options: ["Trees", "Graphs", "Neural Networks", "Rules"],
+        answer: "Neural Networks"
+      },
+      {
+        question: "9. What is the function of a chatbot?",
+        options: ["Draw images", "Perform financial transactions", "Simulate conversation", "Play music"],
+        answer: "Simulate conversation"
+      },
+      {
+        question: "10. What is training data in AI?",
+        options: ["Data used to evaluate a model", "Data used to teach the model", "Data used for storing", "Unlabeled data"],
+        answer: "Data used to teach the model"
+      },
+      {
+        question: "11. What is the output of classification algorithms?",
+        options: ["A category", "A number", "A sentence", "An image"],
+        answer: "A category"
+      },
+      {
+        question: "12. Which company developed ChatGPT?",
+        options: ["Google", "Microsoft", "OpenAI", "Amazon"],
+        answer: "OpenAI"
+      },
+      {
+        question: "13. What is the goal of reinforcement learning?",
+        options: ["Minimize data", "Maximize rewards", "Create visuals", "Store data"],
+        answer: "Maximize rewards"
+      },
+      {
+        question: "14. Which of the following is a benefit of AI?",
+        options: ["Automation", "Speed", "Accuracy", "All of the above"],
+        answer: "All of the above"
+      },
+      {
+        question: "15. AI systems require what to learn?",
+        options: ["Food", "Code", "Data", "Fuel"],
+        answer: "Data"
+      },
+      {
+        question: "16. What is overfitting in machine learning?",
+        options: ["Model fits data too well", "Model is very fast", "Model ignores errors", "Model lacks data"],
+        answer: "Model fits data too well"
+      },
+      {
+        question: "17. Which of these is not a machine learning type?",
+        options: ["Supervised", "Unsupervised", "Controlled", "Reinforcement"],
+        answer: "Controlled"
+      },
+      {
+        question: "18. Which term describes AI making decisions like a human?",
+        options: ["Cognition", "Automation", "Heuristics", "Simulation"],
+        answer: "Cognition"
+      },
+      {
+        question: "19. AI helps in which of the following sectors?",
+        options: ["Healthcare", "Finance", "Education", "All of the above"],
+        answer: "All of the above"
+      },
+      {
+        question: "20. What is a dataset?",
+        options: ["A collection of books", "A machine", "A collection of data", "An app"],
+        answer: "A collection of data"
+      }
+    ];
+
+    const quizContainer = document.getElementById("quizForm");
+
+    questions.forEach((q, index) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `
+        <h3>${q.question}</h3>
+        ${q.options.map(option =>
+          `<label><input type="radio" name="q${index}" value="${option}"> ${option}</label>`
+        ).join('')}
+      `;
+      quizContainer.appendChild(div);
+    });
+
+    function submitQuiz() {
+      let score = 0;
+      questions.forEach((q, i) => {
+        const answer = document.querySelector(`input[name="q${i}"]:checked`);
+        if (answer && answer.value === q.answer) {
+          score++;
+        }
+      });
+      
+      localStorage.setItem("fullName", "Student Full Name");
+localStorage.setItem("profileImage", "data:image/png;base64,..."); // Optional
+
+      const percent = (score / questions.length) * 100;
+      document.getElementById("result").innerHTML = `You scored ${score} out of ${questions.length} (${percent.toFixed(2)}%)`;
+
+      // Save result
+      localStorage.setItem("ai_quiz_score", score);
+      localStorage.setItem("ai_quiz_total", questions.length);
+
+      if (percent >= 60) {
+        setTimeout(() => {
+          window.location.href = "certificate.html?course=AI Basics";
+        }, 3000);
+      } else {
+        alert("You did not pass. You need at least 60%. Try again!");
+      }
+    }
+  </script>
+</body>
+</html>
